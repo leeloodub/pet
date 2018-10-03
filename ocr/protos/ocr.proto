@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package protos;
+
+message OCRRequest {
+  // Path to the image.
+  string raw_img_path = 1;
+
+  // Whether to store results in the database.
+  bool store = 2;
+
+  // Whether to return image path only after the file has been
+  // parsed and stored.
+  bool async = 3;
+}
+
+message OCRResponse {
+  string parsed_img_path = 1;
+
+  enum Status {
+    UNDEFINED = 0;
+    PROCESSING = 1;
+    FAILED = 2;
+    SUCCESS = 3;
+  }
+
+  Status status = 2;
+}
+
+service OCRService {
+  rpc DoOCR(OCRRequest) returns (OCRResponse);
+}
