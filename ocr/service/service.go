@@ -13,14 +13,14 @@ type OCRService struct {
 	storage Storage
 }
 
-func (s *OCRService) Init(storage Storage) {
-	s.client = gosseract.NewClient()
-	s.storage = storage
-}
-
-func (s *OCRService) Close() {
-	s.client.Close()
-}
+// func (s *OCRService) Init(storage Storage) {
+// 	s.client = gosseract.NewClient()
+// 	s.storage = storage
+// }
+//
+// func (s *OCRService) Close() {
+// 	s.client.Close()
+// }
 
 func (s *OCRService) DoOCR(ctx context.Context, req *pb.OCRRequest, resp *pb.OCRResponse) {
 	path := req.RawImgPath
