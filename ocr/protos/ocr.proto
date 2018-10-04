@@ -15,7 +15,7 @@ message OCRRequest {
 }
 
 message OCRResponse {
-  string parsed_img_path = 1;
+  string parsed_img_id = 1;
 
   enum Status {
     UNDEFINED = 0;
