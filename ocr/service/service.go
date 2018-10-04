@@ -22,11 +22,10 @@ type OCRService struct {
 // 	s.client.Close()
 // }
 
-func (s *OCRService) DoOCR(ctx context.Context, req *pb.OCRRequest, resp *pb.OCRResponse) {
+func (s *OCRService) DoOCR(ctx context.Context, req *pb.OCRRequest) (*pb.OCRResponse, error) {
 	path := req.RawImgPath
 	if path == "" {
-		resp.Status = pb.OCRResponse_UNDEFINED
-		return
+		return &pb.OCRResponse{Status: pb.OCRResponse_UNDEFINED}, nil
 	}
 
 	s.client.SetImage(path)
@@ -34,12 +33,12 @@ func (s *OCRService) DoOCR(ctx context.Context, req *pb.OCRRequest, resp *pb.OCR
 	fmt.Println(t, err)
 
 	if err != nil {
-		resp.Status = pb.OCRResponse_FAILED
+		return &pb.OCRResponse{Status: pb.OCRResponse_FAILED}, nil
 	}
 
 	id, _ := s.storage.InsertParsed(t)
 	fmt.Println(id)
-	resp.Status = pb.OCRResponse_SUCCESS
+	return &pb.OCRResponse{Status: pb.OCRResponse_SUCCESS}, nil
 }
 
 type Storage interface {
